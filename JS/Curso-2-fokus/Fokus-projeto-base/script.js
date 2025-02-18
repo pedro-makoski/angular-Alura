@@ -1,12 +1,33 @@
-const html = document.querySelector("html")
-const focoButton = document.querySelector(".app__card-button--foco")
-const descansoCurtoButton = document.querySelector(".app__card-button--curto")
-const descansoLongoButton = document.querySelector(".app__card-button--longo")
+const html = document.querySelector("html");
+const focoButton = document.querySelector(".app__card-button--foco");
+const descansoCurtoButton = document.querySelector(".app__card-button--curto");
+const descansoLongoButton = document.querySelector(".app__card-button--longo");
 
-const timer = document.getElementById("timer")
-const appImage = document.querySelector(".app__image")
-const appTittle = document.querySelector(".app__title")
-const initTimer = document.getElementById("start-pause")
+const timer = document.getElementById("timer");
+const appImage = document.querySelector(".app__image");
+const appTittle = document.querySelector(".app__title");
+const initTimer = document.getElementById("start-pause");
+const botaoPlay = document.getElementById("start-pause");
+
+const allButtons = document.querySelectorAll(".app__card-button");
+
+const musicaFocoInput = document.getElementById("alternar-musica");
+const musicaFocus = new Audio('./sons/luna-rise-part-one.mp3');
+const playAudio = new Audio("./sons/play.wav    ");
+const pauseAudio = new Audio("./sons/pause.mp3");
+const acabouTempo = new Audio("./sons/beep.mp3");
+musicaFocus.loop = true;
+
+let tempoDecorridoEmSegundos = 5;
+let intervaloId = null; 
+
+musicaFocoInput.addEventListener("change", () => {
+    if(musicaFocus.paused) {
+        musicaFocus.play()
+    } else {
+        musicaFocus.pause()
+    }
+})
 
 const MAX_FOCUS = 1500
 const CURTO_DESCANSO = 300
@@ -15,16 +36,68 @@ const LONGO_DESCANSO = 900
 const ATRIBUTE_INFO_STATUS = "data-contexto"
 
 focoButton.addEventListener("click", () => {
-    html.setAttribute(ATRIBUTE_INFO_STATUS, "foco");
-    appImage.setAttribute('src', './imagens/foco.png')
+    alterarContexto("foco");
+    focoButton.classList.add("active")
 })
 
 descansoCurtoButton.addEventListener("click", () => {
-    html.setAttribute(ATRIBUTE_INFO_STATUS, "descanso-curto")
-    appImage.setAttribute('src', './imagens/descanso-curto.png')
+    alterarContexto("descanso-curto");
+    descansoCurtoButton.classList.add("active")
 })
 
 descansoLongoButton.addEventListener("click", () => {
-    html.setAttribute(ATRIBUTE_INFO_STATUS, "descanso-longo")
-    appImage.setAttribute('src', './imagens/descanso-longo.png')
+    alterarContexto("descanso-longo");
+    descansoLongoButton.classList.add("active")
 })
+
+function alterarContexto(contexto) {
+    allButtons.forEach(botao => {
+        botao.classList.remove("active")
+    });
+
+    html.setAttribute(ATRIBUTE_INFO_STATUS, contexto);
+    appImage.setAttribute('src', `./imagens/${contexto}.png`);  
+
+    switch(contexto) {
+        case "foco":
+            appTittle.innerHTML = `Otimize sua produtividade,<br><strong class="app__title-strong">mergulhe no que importa.</strong>`;
+            break;
+        case "descanso-curto":
+            appTittle.innerHTML = `Que tal dar uma respirada?<br><strong class="app__title-strong">Faça uma pausa curta</strong>`
+            break;
+        case "descanso-longo":
+            appTittle.innerHTML = `Hora de voltar à superfície<br><strong class="app__title-strong">Faça uma pausa longa</strong>`
+            break;
+        default:
+            break;
+    }
+}
+
+const contagemRegressiva = () => {
+    if(tempoDecorridoEmSegundos <= 0) {
+        acabouTempo.play();
+        alert("Tempo finalizado");
+        acabouTempo.pause();
+        pararContador();
+        return 
+    }
+    tempoDecorridoEmSegundos-=1 
+    console.log("Tempo: "+tempoDecorridoEmSegundos)
+}
+
+botaoPlay.addEventListener("click", iniciarOuPausar)
+
+function iniciarOuPausar() {
+    if(intervaloId) {
+        pauseAudio.play()
+        pararContador();
+        return;
+    }
+    playAudio.play();
+    intervaloId = setInterval(contagemRegressiva, 1000);
+}
+
+function pararContador() {
+    clearInterval(intervaloId);
+    intervaloId = null;
+}
