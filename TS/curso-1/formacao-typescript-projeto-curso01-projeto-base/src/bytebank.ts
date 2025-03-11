@@ -3,7 +3,7 @@ const saldoElement = document.querySelector(".saldo-valor .valor") as HTMLElemen
 if(saldoElement !== null) {
     saldoElement.textContent = saldo.toString();
 }
-
+    
 const elementoFormulario = document.querySelector(".block-nova-transacao form") as HTMLFormElement;
 elementoFormulario.addEventListener("submit", (e) => {
     e.preventDefault();
