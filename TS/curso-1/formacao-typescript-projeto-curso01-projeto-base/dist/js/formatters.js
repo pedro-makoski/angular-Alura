@@ -18,5 +18,5 @@ function formatarData(data, formato = FormatoData.PADRAO) {
 function formatarInformacoes(valor, data, formatoData) {
     const dataFormatada = formatarData(data, formatoData);
     const valorFormatado = fomatarMoeda(valor);
-    return `${valorFormatado} - ${dataFormatada}`;
+    return `${dataFormatada} - ${valorFormatado}`;
 }

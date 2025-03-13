@@ -23,5 +23,5 @@ function formatarInformacoes(valor: number, data: Date, formatoData:FormatoData)
     const dataFormatada = formatarData(data, formatoData);
     const valorFormatado = fomatarMoeda(valor);
 
-    return `${valorFormatado} - ${dataFormatada}`;	
+    return `${dataFormatada} - ${valorFormatado}`;	
 }
