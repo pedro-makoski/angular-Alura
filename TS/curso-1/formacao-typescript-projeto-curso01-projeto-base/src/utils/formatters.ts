@@ -1,8 +1,10 @@
-function fomatarMoeda(valor:number): string {
+import { FormatoData } from "../types/FormatoData.js";
+
+export function fomatarMoeda(valor:number): string {
     return valor.toLocaleString("pt-br", {style:"currency", currency:"BRL"});
 }
 
-function formatarData(data: Date, formato: FormatoData = FormatoData.PADRAO) : string {
+export function formatarData(data: Date, formato: FormatoData = FormatoData.PADRAO) : string {
     if(formato === FormatoData.DIA_SEMANANA_DIA_MES_ANO) {
         return data.toLocaleDateString("pt-br", {
             weekday: "long",	
