@@ -1,6 +1,6 @@
 import { FormatoData } from "../types/FormatoData.js";
 import { formatarData } from "../utils/formatters.js";
-import Conta from "../types/conta.js";
+import Conta from "../types/Conta.js";
 const elementoDataAcesso = document.querySelector("time");
 function renderizarSaldo() {
     if (elementoDataAcesso !== null) {

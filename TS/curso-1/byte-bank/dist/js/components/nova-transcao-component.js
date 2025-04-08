@@ -1,4 +1,4 @@
-import Conta from "../types/conta.js";
+import Conta from "../types/Conta.js";
 import SaldoComponent from "./saldo-component.js";
 const elementoFormulario = document.querySelector(".block-nova-transacao form");
 elementoFormulario.addEventListener("submit", (e) => {
