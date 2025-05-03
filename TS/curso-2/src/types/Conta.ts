@@ -1,25 +1,29 @@
 import { Armazenador } from "./armazenador.js";
+import { ValidaDebito, ValidaDeposito } from "./Decorators.js";
 import { GrupoTransacao } from "./GrupoTransacao.js";
-import { TipoTransacao } from "./TipoTransacao.js";  
+import { TipoTransacao } from "./TipoTransacao.js";
 import { Transacao } from "./Transacao.js";
 
 export class Conta {
   protected nome: string;
   protected saldo: number = Armazenador.obter<number>("saldo") || 0;
-  private transacoes: Transacao[] = Armazenador.obter<Transacao[]>(("transacoes"), (key: string, value: any) => {
-    if (key === "data") {
-      return new Date(value);
-    }
+  private transacoes: Transacao[] = Armazenador.obter<Transacao[]>(
+    "transacoes",
+    (key: string, value: any) => {
+      if (key === "data") {
+        return new Date(value);
+      }
 
-    return value;
-  })
+      return value;
+    }
+  );
 
   public constructor(nome: string) {
     this.nome = nome;
   }
 
   public getTitular(): string {
-    return this.nome
+    return this.nome;
   }
 
   public getGruposTransacoes(): GrupoTransacao[] {
@@ -56,26 +60,17 @@ export class Conta {
     return new Date();
   }
 
+  @ValidaDebito
   public debitar(valor: number): void {
-    if (valor <= 0) {
-        throw new Error("O valor a ser debitado deve ser maior que zero!");
-    }
-    if (valor > this.saldo) {
-        throw new Error("Saldo insuficiente!");
-    }
-
     this.saldo -= valor;
     Armazenador.salvar("saldo", this.saldo.toString());
-}
+  }
 
-public depositar(valor: number): void {
-    if (valor <= 0) {
-        throw new Error("O valor a ser depositado deve ser maior que zero!");
-    }
-
+  @ValidaDeposito
+  public depositar(valor: number): void {
     this.saldo += valor;
     Armazenador.salvar("saldo", this.saldo.toString());
-}
+  }
 
   public registrarTransacao(novaTransacao: Transacao): void {
     if (novaTransacao.tipoTransacao == TipoTransacao.DEPOSITO) {
@@ -91,23 +86,22 @@ public depositar(valor: number): void {
     }
 
     this.transacoes.push(novaTransacao);
- 
-    Armazenador.salvar("transacoes", JSON.stringify(this. transacoes));
+
+    Armazenador.salvar("transacoes", JSON.stringify(this.transacoes));
   }
 }
 
 export class ContaPremium extends Conta {
   registrarTransacao(transacao: Transacao): void {
-    if(transacao.tipoTransacao === TipoTransacao.DEPOSITO) {
-      console.log("ganhou um bonus 0.50 centavos")
-      transacao.valor += 0.5
+    if (transacao.tipoTransacao === TipoTransacao.DEPOSITO) {
+      console.log("ganhou um bonus 0.50 centavos");
+      transacao.valor += 0.5;
     }
-    super.registrarTransacao(transacao)
+    super.registrarTransacao(transacao);
   }
 }
 
 const conta = new Conta("Pedro Makoski");
-const contaPremium = new ContaPremium("Pedro Makoski")
+const contaPremium = new ContaPremium("Pedro Makoski");
 
 export default conta;
-

@@ -1,9 +1,16 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 import { Armazenador } from "./armazenador.js";
+import { ValidaDebito, ValidaDeposito } from "./Decorators.js";
 import { TipoTransacao } from "./TipoTransacao.js";
 export class Conta {
     nome;
     saldo = Armazenador.obter("saldo") || 0;
-    transacoes = Armazenador.obter(("transacoes"), (key, value) => {
+    transacoes = Armazenador.obter("transacoes", (key, value) => {
         if (key === "data") {
             return new Date(value);
         }
@@ -40,19 +47,10 @@ export class Conta {
         return new Date();
     }
     debitar(valor) {
-        if (valor <= 0) {
-            throw new Error("O valor a ser debitado deve ser maior que zero!");
-        }
-        if (valor > this.saldo) {
-            throw new Error("Saldo insuficiente!");
-        }
         this.saldo -= valor;
         Armazenador.salvar("saldo", this.saldo.toString());
     }
     depositar(valor) {
-        if (valor <= 0) {
-            throw new Error("O valor a ser depositado deve ser maior que zero!");
-        }
         this.saldo += valor;
         Armazenador.salvar("saldo", this.saldo.toString());
     }
@@ -72,5 +70,21 @@ export class Conta {
         Armazenador.salvar("transacoes", JSON.stringify(this.transacoes));
     }
 }
+__decorate([
+    ValidaDebito
+], Conta.prototype, "debitar", null);
+__decorate([
+    ValidaDeposito
+], Conta.prototype, "depositar", null);
+export class ContaPremium extends Conta {
+    registrarTransacao(transacao) {
+        if (transacao.tipoTransacao === TipoTransacao.DEPOSITO) {
+            console.log("ganhou um bonus 0.50 centavos");
+            transacao.valor += 0.5;
+        }
+        super.registrarTransacao(transacao);
+    }
+}
 const conta = new Conta("Pedro Makoski");
+const contaPremium = new ContaPremium("Pedro Makoski");
 export default conta;
