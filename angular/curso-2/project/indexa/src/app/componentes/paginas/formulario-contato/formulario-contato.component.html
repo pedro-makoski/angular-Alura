@@ -12,10 +12,30 @@
     <form [formGroup]="contatoForm" (ngSubmit)="salvarContato()">
         <label for="nome">Nome</label>
         <input type="text" id="nome" name="nome" placeholder="Digite o nome do contato" required formControlName="nome">
+        @if (contatoForm.get('nome')?.errors && contatoForm.get('nome')?.touched) {
+            <div class="mensagem-erro">
+                Campo obrigatório
+            </div>
+        }
         <label for="telefone">Telefone</label>
         <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone do contato" required formControlName="telefone">
+        @if (contatoForm.get('telefone')?.errors && contatoForm.get('telefone')?.touched) {
+            <div class="mensagem-erro">
+                Campo obrigatório
+            </div>
+        }
         <label for="email">E-mail</label>
         <input type="email" id="email" name="email" placeholder="Digite o e-mail do contato" required formControlName="email">
+        @if (contatoForm.get('email')?.errors?.['required'] && contatoForm.get('email')?.touched) {
+            <div class="mensagem-erro">
+                Campo obrigatório
+            </div>
+        }
+        @if (contatoForm.get('email')?.errors?.['email'] && contatoForm.get('email')?.touched) {
+            <div class="mensagem-erro">
+                Formato de e-mail inválido
+            </div>
+        }
         <app-separador></app-separador>
         <label for="aniversario">Aniversario</label>
         <input type="date" id="aniversario" name="aniversario" placeholder="Digite o aniversario do contato" formControlName="aniversario">
@@ -28,7 +48,7 @@
         <textarea name="observacoes" id="observacoes" placeholder="Coloque observações neste espaço" formControlName="observacoes"></textarea>
         <section class="botoes">
             <button type="button" class="botao-cancelar" (click)="cancelar()">Cancelar</button>
-            <button type="submit" class="botao-salvar">Salvar Contato</button>
+            <button [disabled]="contatoForm.invalid" type="submit" [ngClass]="contatoForm.valid ? 'botao-salvar' : 'botao-desabilitado'">Salvar Contato</button>
         </section>
     </form>
 </app-container>
