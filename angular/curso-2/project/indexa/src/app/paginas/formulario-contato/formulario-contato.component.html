@@ -9,6 +9,11 @@
         </section>
     </header>
 
+    <button routerLink="/lista-contatos" class="botao-voltar">
+        <img src="/assets/arrow-left.png" alt="Voltar">
+        <span>Voltar</span>
+    </button>
+
     <form [formGroup]="contatoForm" (ngSubmit)="salvarContato()">
         <label for="nome">Nome</label>
         <input type="text" id="nome" name="nome" placeholder="Digite o nome do contato" required formControlName="nome">

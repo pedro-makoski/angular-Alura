@@ -163,3 +163,18 @@ input:focus {
   color: red;
   margin-bottom: 12px;
 }
+
+.botao-voltar {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #0D6EFD;
+  cursor: pointer;
+}
+
+.botao-voltar img {
+  margin-bottom: 3px;
+}
