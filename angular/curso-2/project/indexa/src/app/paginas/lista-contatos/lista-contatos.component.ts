@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CabecalhoComponent } from '../../componentes/cabecalho/cabecalho.component';
 import { SeparadorComponent } from '../../componentes/separador/separador.component';
 import { ContatoComponent } from '../../componentes/contato/contato.component';
 import { FormsModule } from '@angular/forms';
-import agenda from '../../agenda.json'
 import { ContainerComponent } from '../../componentes/container/container.component';
 import { RouterLink } from '@angular/router';
+import { ContatoService } from '../../services/contato.service';
 
 interface Contato {
   id: number
@@ -30,14 +30,18 @@ function removeAcentos(str: string): string {
   templateUrl: './lista-contatos.component.html',
   styleUrl: './lista-contatos.component.css'
 })
-export class ListaContatosComponent {
+export class ListaContatosComponent implements OnInit {
   alfabeto: string = 'abcdefghijklmnopqrstuvwxyz';
-  contatos: Contato[] = agenda;
+  contatos: Contato[] = [];
 
   letrasExibidas: string[] = []
+
+  constructor(private contatoService: ContatoService) {}
+
   private _filtroPorTexto: string = ''
 
   ngOnInit() {
+    this.contatos = this.contatoService.obterContatos()
     this.setLetrasDoAlfabeto()
   }
 
@@ -64,7 +68,7 @@ export class ListaContatosComponent {
 
   public filtrarContatosPorLetraInicial(letra: string): Contato[] {
     return this.filtrarContatosPorTexto().filter( contato => {
-      return contato.nome.toLowerCase().startsWith(letra)
+      return removeAcentos(contato.nome.toLowerCase()).startsWith(letra)
     })
   }
 
@@ -73,7 +77,7 @@ export class ListaContatosComponent {
     const letras = new Set<string>()
     contatos.forEach(contato => {
       const letra = contato.nome.charAt(0).toLowerCase()
-      letras.add(letra)
+      letras.add(removeAcentos(letra))
     }
     )
     this.letrasExibidas = Array.from(letras).sort()
