@@ -6,12 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ContainerComponent } from '../../componentes/container/container.component';
 import { RouterLink } from '@angular/router';
 import { ContatoService } from '../../services/contato.service';
-
-interface Contato {
-  id: number
-  nome: string
-  telefone: string
-} 
+import { Contato } from '../../componentes/contato/contato';
 
 function removeAcentos(str: string): string {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')

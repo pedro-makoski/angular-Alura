@@ -1,10 +1,11 @@
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
 import { Component, OnInit } from '@angular/core';
 import { ContainerComponent } from "../../componentes/container/container.component";
 import { SeparadorComponent } from '../../componentes/separador/separador.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ContatoService } from '../../services/contato.service';
 
 @Component({
   selector: 'app-formulario-contato',
@@ -17,6 +18,9 @@ export class FormularioContatoComponent implements OnInit {
 
   ngOnInit() {
       this.inicializarFormulario();
+  }
+
+  constructor(private contatoService: ContatoService, private router: Router) { 
   }
 
   inicializarFormulario() {
@@ -32,11 +36,14 @@ export class FormularioContatoComponent implements OnInit {
 
   salvarContato() {
     if(this.contatoForm.valid) {
-      console.log(this.contatoForm.value);
+      const novoContato = this.contatoForm.value;
+      this.contatoService.salvarContato(novoContato);
+      this.contatoForm.reset();
+      this.router.navigateByUrl('/lista-contatos');
     }
   }
 
   cancelar() {
-    console.log('Submissão Cancelada');
+    this.contatoForm.reset()
   }
 }
