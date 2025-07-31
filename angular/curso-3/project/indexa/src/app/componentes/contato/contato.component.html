@@ -3,10 +3,10 @@
         <li><strong>{{ nome }}</strong></li>
         <li>{{ telefone }}</li>
         <li>
-            <button aria-label="Botão de editar">
+            <button aria-label="Botão de editar" [routerLink]="['/perfil-contato', id]">
                 <img src="/assets/pencil-square.png" alt="Botão de editar" />
             </button>
-            <button aria-label="Botão de excluir">
+            <button aria-label="Botão de excluir" [routerLink]="['/perfil-contato', id]">
                 <img src="/assets/trash.png" alt="Botão de excluir" />
             </button>
         </li>

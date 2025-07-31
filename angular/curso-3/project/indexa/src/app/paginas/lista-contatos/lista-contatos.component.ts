@@ -7,6 +7,7 @@ import { ContainerComponent } from '../../componentes/container/container.compon
 import { RouterLink } from '@angular/router';
 import { ContatoService } from '../../services/contato.service';
 import { Contato } from '../../componentes/contato/contato';
+import { PerfilContatoComponent } from "../perfil-contato/perfil-contato.component";
 
 function removeAcentos(str: string): string {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -15,13 +16,13 @@ function removeAcentos(str: string): string {
 @Component({
   selector: 'app-lista-contatos',
   imports: [
-      CabecalhoComponent, 
-      SeparadorComponent, 
-      ContatoComponent,
-      FormsModule,
-      ContainerComponent,
-      RouterLink
-    ],
+    CabecalhoComponent,
+    SeparadorComponent,
+    ContatoComponent,
+    FormsModule,
+    ContainerComponent,
+    RouterLink,
+],
   templateUrl: './lista-contatos.component.html',
   styleUrl: './lista-contatos.component.css'
 })
