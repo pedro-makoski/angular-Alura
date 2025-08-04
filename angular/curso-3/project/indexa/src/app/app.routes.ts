@@ -15,6 +15,10 @@ export const routes: Routes = [
     {
         path: "perfil-contato/:id",
         component: PerfilContatoComponent
+    },  
+    {
+        path: 'formulario/:id',
+        component: FormularioContatoComponent
     },
     {
         path: '',

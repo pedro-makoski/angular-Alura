@@ -1,4 +1,4 @@
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 
 import { Component, OnInit } from '@angular/core';
 import { ContainerComponent } from "../../componentes/container/container.component";
@@ -18,9 +18,10 @@ export class FormularioContatoComponent implements OnInit {
 
   ngOnInit() {
       this.inicializarFormulario();
+      this.carregarContato()
   }
 
-  constructor(private contatoService: ContatoService, private router: Router) { 
+  constructor(private contatoService: ContatoService, private router: Router, private activatedRoute: ActivatedRoute) { 
   }
 
   inicializarFormulario() {
@@ -35,12 +36,34 @@ export class FormularioContatoComponent implements OnInit {
   }
 
   salvarContato() {
-    if(this.contatoForm.valid) {
+    if(this.contatoForm.valid) {  
       const novoContato = this.contatoForm.value;
-      this.contatoService.salvarContato(novoContato).subscribe(() => {
+
+      const id = this.getId() 
+      novoContato.id = id
+
+      this.contatoService.editarOuSalvarContato(novoContato).subscribe(() => {
         this.contatoForm.reset();
         this.router.navigateByUrl('/lista-contatos');
       });
+    }
+  }
+
+  getId(): number | null {
+    const id = this.activatedRoute.snapshot.paramMap.get("id")
+    if(id) {
+      return parseInt(id)
+    }
+
+    return null 
+  }
+
+  carregarContato() {
+    const id = this.getId()
+    if(id) {
+      this.contatoService.buscarContatoPorId(id).subscribe((contato) => {
+        this.contatoForm.patchValue(contato)
+      })
     }
   }
 

@@ -3,6 +3,10 @@
         <section class="cabecalho-link">
             <img src="/assets/logo.png" alt="">
         </section>
+        <button routerLink="/lista-contatos" class="botao-voltar">
+            <img src="/assets/arrow-left.png" alt="Voltar">
+            <span>Voltar</span>
+        </button>
         <section class="cabecalho-contato">
             <img src="/assets/perfil-contato.png" alt="">
             <h1>Perfil do contato</h1>
@@ -33,10 +37,10 @@
         <li>{{ contato.redes }}</li>
         </ul>
         <div class="botoes">
-        <button class="botao-excluir">
+        <button class="botao-excluir" (click)="excluir()">
             Excluir contato
         </button>
-        <button class="botao-editar">
+        <button class="botao-editar" [routerLink]="['/formulario', contato.id]">
             Editar
         </button>
         </div>
