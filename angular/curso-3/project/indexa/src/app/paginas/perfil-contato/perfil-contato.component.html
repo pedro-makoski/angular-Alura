@@ -14,6 +14,11 @@
     </header>
 
     <section class="perfil" ng-non-hydratable>
+        <div class="imagem-perfil">
+            <img [src]="contato.avatar" alt="Avatar do contato atual">
+            <h2><strong>{{contato.nome}}</strong></h2>
+        </div>
+        <app-separador></app-separador>
         <ul>
         <li>
             <i class="material-icons">call</i>

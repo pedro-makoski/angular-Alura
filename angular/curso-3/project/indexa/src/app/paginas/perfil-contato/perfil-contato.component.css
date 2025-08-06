@@ -60,8 +60,8 @@ h1 {
 .perfil {
   background: #e7f1ff;
   width: 416px;
-  height: 548px;
-  padding: 24px, 16px;
+  height: fit-content;
+  padding: 10px 0;
   border-radius: 16px;
 }
 
@@ -134,3 +134,27 @@ h1 {
 .botao-voltar img {
   margin-bottom: 3px;
 }
+
+.imagem-perfil {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding-top: 12px;
+    padding-left: 24px;
+    margin-top: 36px;
+  }
+
+  .imagem-perfil img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  h2 {
+    font-family: 'Montserrat';
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 33px;
+    color: #0D6EFD;
+    padding-left: 12px;
+  }
