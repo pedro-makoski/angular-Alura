@@ -1,5 +1,13 @@
 <header class="cabecalho">
     <img src="/assets/logo.png" alt="Logo do indexa" class="logo">
-    <img src="/assets/banner.png" alt="Banner do indexa" class="banner">
-    <h1 class="titulo">Organize, <span>conecte,</span> simplifique!</h1>
+    @if(!telaInicial) {
+        <div class="link">
+            <button routerLink="/lista-contatos" class="botao-voltar">
+                <img src="/assets/arrow-left.png" alt="Voltar" class="seta">
+                <span>Voltar</span>
+            </button>
+        </div>
+    }
+    <img [src]="bannerSrc" alt="Banner do indexa" class="banner">
+    <h1 class="titulo" [innerText]="titulo"></h1>
 </header>

@@ -3,13 +3,15 @@ import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ContainerComponent } from "../../componentes/container/container.component";
 import { SeparadorComponent } from '../../componentes/separador/separador.component';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Form, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ContatoService } from '../../services/contato.service';
+import { MensagemErroComponent } from "../../componentes/mensagem-erro/mensagem-erro.component";
+import { CabecalhoComponent } from "../../componentes/cabecalho/cabecalho.component";
 
 @Component({
   selector: 'app-formulario-contato',
-  imports: [ContainerComponent, SeparadorComponent, ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [ContainerComponent, SeparadorComponent, ReactiveFormsModule, CommonModule, RouterLink, MensagemErroComponent, CabecalhoComponent],
   templateUrl: './formulario-contato.component.html',
   styleUrl: './formulario-contato.component.css'
 })
@@ -48,6 +50,15 @@ export class FormularioContatoComponent implements OnInit {
         this.router.navigateByUrl('/lista-contatos');
       });
     }
+  }
+
+  obterControle(nome: string): FormControl {
+    const control = this.contatoForm.get(nome)
+    if(!control) {
+      throw new Error("Controle de formulário não encontrado" + nome)
+    }
+
+    return control as FormControl
   }
 
   getId(): number | null {

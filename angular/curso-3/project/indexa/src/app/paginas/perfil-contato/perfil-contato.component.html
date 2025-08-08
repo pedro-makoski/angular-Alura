@@ -1,17 +1,9 @@
 <app-container>
-    <header>
-        <section class="cabecalho-link">
-            <img src="/assets/logo.png" alt="">
-        </section>
-        <button routerLink="/lista-contatos" class="botao-voltar">
-            <img src="/assets/arrow-left.png" alt="Voltar">
-            <span>Voltar</span>
-        </button>
-        <section class="cabecalho-contato">
-            <img src="/assets/perfil-contato.png" alt="">
-            <h1>Perfil do contato</h1>
-        </section>
-    </header>
+    <app-cabecalho
+        bannerSrc="/assets/perfil-contato.png"
+        titulo="Perfil Contato"
+    >
+    </app-cabecalho>
 
     <section class="perfil" ng-non-hydratable>
         <div class="imagem-perfil">
