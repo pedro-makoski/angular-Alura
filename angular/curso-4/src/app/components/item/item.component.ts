@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Item } from 'src/app/interfaces/iItem';
 
 @Component({
@@ -7,8 +7,11 @@ import { Item } from 'src/app/interfaces/iItem';
   styleUrls: ['./item.component.css']
 })
 export class ItemComponent implements OnInit, OnChanges {
-  constructor() { }
   @Input() item!: Item
+  @Output() emitidoItemParaEditar = new EventEmitter();
+
+  constructor() { }
+  
 
   ngOnInit(): void {
     console.log("onInit")
@@ -16,5 +19,9 @@ export class ItemComponent implements OnInit, OnChanges {
   
   ngOnChanges(changes: SimpleChanges): void {
     console.log("onChanges")
+  }
+
+  editarItem(): void {
+    this.emitidoItemParaEditar.emit(this.item)
   }
 }
