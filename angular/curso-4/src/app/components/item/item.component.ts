@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Item } from 'src/app/interfaces/iItem';
+import { ListaDeCompraService } from 'src/app/service/lista-de-compra.service';
 
 @Component({
   selector: 'app-item',
@@ -10,7 +11,7 @@ export class ItemComponent implements OnInit, OnChanges {
   @Input() item!: Item
   @Output() emitidoItemParaEditar = new EventEmitter();
 
-  constructor() { }
+  constructor(private listaDeComprasService: ListaDeCompraService) { }
   
 
   ngOnInit(): void {
@@ -23,5 +24,9 @@ export class ItemComponent implements OnInit, OnChanges {
 
   editarItem(): void {
     this.emitidoItemParaEditar.emit(this.item)
+  }
+
+  onInputCheck(): void {
+    this.listaDeComprasService.toggleCompradoItem(this.item)
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { ListaDeCompraService } from './service/lista-de-compra.service';
 import { Item } from './interfaces/iItem';
 
@@ -7,7 +7,7 @@ import { Item } from './interfaces/iItem';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, DoCheck {
   title = 'app-lista-de-compras';
   listaDeCompra! : Array<Item>
   itemParaSerEditado!: Item 
@@ -20,5 +20,9 @@ export class AppComponent implements OnInit {
 
   editarItem(item: Item) {
     this.itemParaSerEditado = item;
+  }
+
+  ngDoCheck(): void {
+    this.listaService.atualizarLocalStorage()
   }
 }
