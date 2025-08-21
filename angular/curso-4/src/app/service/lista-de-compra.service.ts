@@ -51,4 +51,8 @@ export class ListaDeCompraService {
     const id = Number(item.id)
     this.listaDeCompra[id-1].comprado = !this.listaDeCompra[id-1].comprado; 
   }
+
+  limparTudo(): void {
+    this.listaDeCompra = []
+  }
 }

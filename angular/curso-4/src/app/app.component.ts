@@ -25,4 +25,14 @@ export class AppComponent implements OnInit, DoCheck {
   ngDoCheck(): void {
     this.listaService.atualizarLocalStorage()
   }
+
+  delatarItem(id: number): void {
+    const index = this.listaDeCompra.findIndex((item) => item.id === id)
+    this.listaDeCompra.splice(index, 1)
+  }
+
+  limparLista(): void {
+    this.listaDeCompra = []
+    this.listaService.limparTudo()
+  }
 }

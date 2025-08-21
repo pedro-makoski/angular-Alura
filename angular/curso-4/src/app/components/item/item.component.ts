@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Item } from 'src/app/interfaces/iItem';
 import { ListaDeCompraService } from 'src/app/service/lista-de-compra.service';
 
@@ -7,9 +7,10 @@ import { ListaDeCompraService } from 'src/app/service/lista-de-compra.service';
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.css']
 })
-export class ItemComponent implements OnInit, OnChanges {
+export class ItemComponent implements OnInit, OnChanges, OnDestroy {
   @Input() item!: Item
   @Output() emitidoItemParaEditar = new EventEmitter();
+  @Output() emitidoIdParaDeletar = new EventEmitter();
 
   constructor(private listaDeComprasService: ListaDeCompraService) { }
   
@@ -28,5 +29,13 @@ export class ItemComponent implements OnInit, OnChanges {
 
   onInputCheck(): void {
     this.listaDeComprasService.toggleCompradoItem(this.item)
+  }
+
+  delatarItem(): void {
+    this.emitidoIdParaDeletar.emit(this.item.id)
+  }
+
+  ngOnDestroy(): void {
+    console.log("Adeus para todos que me amaram muito")
   }
 }
