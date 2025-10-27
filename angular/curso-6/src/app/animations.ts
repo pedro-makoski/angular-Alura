@@ -1,0 +1,19 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
+export const highlitedStateTrigger = trigger('highlightedState', [
+    state('default', style({
+      border: '2px solid #B2B6FF',
+    })),
+    state('highlighted', style({
+      outline: '4px solid #B2B6FF',
+      filter: "brightness(92%)"
+    })),
+    transition('default => highlighted', [
+      animate('0.2s 0s ease-out', 
+        style({
+          transform: 'scale(1.02)',
+        }),
+      ),
+      animate(200)
+    ])
+  ])
