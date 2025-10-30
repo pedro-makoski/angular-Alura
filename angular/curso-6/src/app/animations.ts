@@ -8,12 +8,28 @@ export const highlitedStateTrigger = trigger('highlightedState', [
       outline: '4px solid #B2B6FF',
       filter: "brightness(92%)"
     })),
-    transition('default => highlighted', [
+    transition('default <=> highlighted', [
       animate('0.2s 0s ease-out', 
         style({
           transform: 'scale(1.02)',
         }),
       ),
       animate(200)
-    ])
+    ]),
+  ])
+
+  export const showStateTrigger = trigger('showState', [
+    transition(':enter', [
+      style({
+        opacity: 0
+      }),
+      animate(300, style({
+        opacity: 1,
+      }))
+    ]),
+    transition(':leave', [
+      animate(300, style({
+        opacity: 0,
+      }))
+    ]),
   ])
