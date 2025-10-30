@@ -33,3 +33,21 @@ export const highlitedStateTrigger = trigger('highlightedState', [
       }))
     ]),
   ])
+
+export const checkTrigger = trigger('checkItem', [
+    state('check', style({})),
+    transition('void => check', [
+    style({
+      transform: 'scale(1)'   
+    }),
+    animate(100, style({
+      transform: 'scale(0.9)'       
+    })),
+    animate(100, style({
+      transform: 'scale(1)'
+    })),
+    animate(100, style({
+      transform: 'scale(1) rotate(360deg)'
+    })),
+  ]),
+  ])

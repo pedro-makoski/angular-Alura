@@ -6,6 +6,13 @@
       "categoria": "Estudos",
       "statusFinalizado": true,
       "prioridade": "Alta"
+    },
+    {
+      "id": 2,
+      "descricao": "aaaa",
+      "statusFinalizado": true,
+      "categoria": "Casa",
+      "prioridade": "Normal"
     }
   ]
 }
